@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import Article from './components/Article';
 import './App.css';
 
 function App() {
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts?userId=1')
+      .then(response => response.json())
+      .then(data => setArticles(data))
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+        <span className="header">{"<Articles>"}</span>
+        {articles.map(article =>
+          <Article article={article} key={article.id} />
+        )}
+        <span className="header">{"</Articles>"}</span>
     </div>
   );
 }
