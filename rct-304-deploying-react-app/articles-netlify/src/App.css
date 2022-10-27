@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+.header {
+  font-size: 48px;
+  padding: 20px;
+}
+
+.article {
+  display: grid;
+  padding: 20px;
+}
+
+.container {
+  font-family: 'Courier New';
+  color: whitesmoke;
+  display: grid;
+  gap: 20px;
+  padding-left: 20px;
+  grid-template-columns: minmax(50%, 50%);
+}
