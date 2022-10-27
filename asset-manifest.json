@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/dotTheory-React-Monty/static/css/main.60eec6fa.css",
-    "main.js": "/dotTheory-React-Monty/static/js/main.2b3701ab.js",
+    "main.js": "/dotTheory-React-Monty/static/js/main.2186ad31.js",
     "static/js/787.b8d467d0.chunk.js": "/dotTheory-React-Monty/static/js/787.b8d467d0.chunk.js",
     "index.html": "/dotTheory-React-Monty/index.html",
     "main.60eec6fa.css.map": "/dotTheory-React-Monty/static/css/main.60eec6fa.css.map",
-    "main.2b3701ab.js.map": "/dotTheory-React-Monty/static/js/main.2b3701ab.js.map",
+    "main.2186ad31.js.map": "/dotTheory-React-Monty/static/js/main.2186ad31.js.map",
     "787.b8d467d0.chunk.js.map": "/dotTheory-React-Monty/static/js/787.b8d467d0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.60eec6fa.css",
-    "static/js/main.2b3701ab.js"
+    "static/js/main.2186ad31.js"
   ]
 }
