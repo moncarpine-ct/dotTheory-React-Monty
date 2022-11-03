@@ -1,38 +1,22 @@
 import React, { useState } from 'react';
 import './App.css';
 
-import GuestList from './components/GuestList';
-import Counter from './components/Counter';
+import Header from "./components/Header";
+import MainContent from './components/MainContent';
+
+let lastGuestId = 0;
 
 function App() {
-  const [guests, setGuests] = useState(
-    [
-      {
-        name: 'Treasure',
-        isConfirmed: false,
-        isEditing: false
-      },
-      {
-        name: 'Nic',
-        isConfirmed: true,
-        isEditing: false
-      },
-      {
-        name: 'Matt K',
-        isConfirmed: false,
-        isEditing: true
-      }
-    ]
-  );
+  const [guests, setGuests] = useState([]);
 
   const [isFiltered, setIsFiltered] = useState(false);
 
   const [pendingGuest, setPendingGuest] = useState("");
 
-  const toggleGuestPropertyAt = (property, indexToChange) => 
+  const toggleGuestProperty = (property, id) => 
     setGuests(
-      guests.map((guest, index) => {
-        if (index === indexToChange) {
+      guests.map((guest) => {
+        if (id === guest.id) {
           return {
             ...guest,
             [property]: !guest[property]
@@ -43,22 +27,19 @@ function App() {
       })
     );
 
-  const toggleConfirmationAt = index =>
-    toggleGuestPropertyAt('isConfirmed', index);
+  const toggleConfirmation = id =>
+    toggleGuestProperty('isConfirmed', id);
 
-  const removeGuestAt = index => 
-    setGuests([
-      ...guests.slice(0, index),
-      ...guests.slice(index + 1),
-    ]);
+  const removeGuest = id => 
+    setGuests(guests.filter(guest => guest.id !== id));
   
-  const toggleEditingAt = index =>
-    toggleGuestPropertyAt('isEditing', index);
+  const toggleEditing = id =>
+    toggleGuestProperty('isEditing', id);
 
-  const setNameAt = (name, indexToChange) => 
+  const setName = (name, id) => 
     setGuests(
-      guests.map((guest, index) => {
-        if (index === indexToChange) {
+      guests.map(guest => {
+        if (id === guest.id) {
           return {
             ...guest,
             name
@@ -75,10 +56,19 @@ function App() {
   const handleNameInput = event => 
     setPendingGuest(event.target.value);
 
+  const newGuestId = () => {
+    const id = lastGuestId;
+    lastGuestId += 1;
+    return id;
+  }
+
   const newGuestSubmitHandler = event => {
     event.preventDefault();
+
+    const id = newGuestId();
     setGuests([
       {
+        id,
         name: pendingGuest,
         isConfirmed: false,
         isEditing: false
@@ -103,41 +93,24 @@ function App() {
 
   return (
     <div className="App">
-      <header> 
-        <h1>RSVP</h1>
-        <p>A Treehouse App</p>
-        <form onSubmit={newGuestSubmitHandler}>
-            <input 
-              type="text" 
-              onChange={handleNameInput}
-              value={pendingGuest}
-              placeholder="Invite Someone" />
-            <button type="submit" name="submit" value="submit">Submit</button>
-        </form>
-      </header>
-      <div className="main">
-        <div>
-          <h2>Invitees</h2>
-          <label>
-            <input 
-              type="checkbox"
-              onChange={toggleFilter}
-              checked={isFiltered} /> Hide those who haven't responded
-          </label>
-        </div>
-        <Counter 
-          totalInvited={totalInvited}
-          numberAttending={numberAttending}
-          numberUnconfirmed={numberUnconfirmed} />
-        <GuestList 
-          guests={guests}
-          toggleConfirmationAt={toggleConfirmationAt}
-          toggleEditingAt={toggleEditingAt}
-          setNameAt={setNameAt}
-          isFiltered={isFiltered}
-          removeGuestAt={removeGuestAt}
-          pendingGuest={pendingGuest} />
-      </div>
+      <Header 
+        newGuestSubmitHandler={newGuestSubmitHandler}
+        pendingGuest={pendingGuest}
+        handleNameInput={handleNameInput}
+      />
+      <MainContent 
+        toggleFilter={toggleFilter}
+        isFiltered={isFiltered}
+        totalInvited={totalInvited}
+        numberAttending={numberAttending}
+        numberUnconfirmed={numberUnconfirmed}
+        guests={guests}
+        toggleConfirmation={toggleConfirmation}
+        toggleEditing={toggleEditing}
+        setName={setName}
+        removeGuest={removeGuest}
+        pendingGuest={pendingGuest}
+      />
     </div>
   );
 }
